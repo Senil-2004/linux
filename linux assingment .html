@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linux Command Guide</title>
+
+    <!-- Font Awesome CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            line-height: 1.6;
+            padding-bottom: 50px;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        nav {
+            background-color: #444;
+            padding: 15px 0;
+            text-align: center;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 20px;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 15px;
+            transition: color 0.3s ease, background-color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            color: #fff;
+            background-color: #00bcd4;
+        }
+
+        section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 40px 30px;
+            margin: 20px auto;
+            max-width: 900px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        section:nth-child(even) {
+            background-color: #fafafa;
+        }
+
+        h2 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-align: left;
+            position: relative;
+            padding-left: 40px;
+        }
+
+        h2 i {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 32px;
+            color: #00bcd4;
+        }
+
+        .content {
+            flex: 3;
+        }
+
+        .image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .image img {
+            max-width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .image img:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .command-description {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #555;
+        }
+
+        .command-description p {
+            margin-bottom: 15px;
+        }
+
+        code {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .command-example {
+            background-color: #e0e0e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            margin-top: 30px;
+        }
+
+        /* Modal styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal:target {
+            display: flex;
+        }
+
+        .modal img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal .close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        /* Keyframes for bounce animation */
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Keyframes for rotate animation */
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Keyframes for pulse animation */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+}
+
+/* Add bounce animation to icons */
+h2 i {
+    display: inline-block;
+    animation: bounce 1.5s infinite ease-in-out;
+    color: #00bcd4;
+    margin-right: 10px;
+    font-size: 32px;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Add hover effect for icons */
+h2 i:hover {
+    animation: rotate 1s linear infinite;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Linux Command Guide</h1>
+        <p>Learn the essential Linux commands for system management and user control.</p>
+    </header>
+
+    <nav>
+        <a href="#init">init</a>
+        <a href="#useradd">useradd</a>
+        <a href="#usermod">usermod</a>
+        <a href="#userdel">userdel</a>
+        <a href="#groupadd">groupadd</a>
+        <a href="#groupmod">groupmod</a>
+        <a href="#groupdel">groupdel</a>
+        <a href="#passwd">passwd</a>
+        <a href="#sudo">sudo</a>
+    </nav>
+
+    <!-- Sections with Images -->
+    <section id="init">
+        <div class="content">
+            <h2><i class="fas fa-cogs"></i> init</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The init command is the first process that starts when a Linux system boots.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo init 3</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-init">
+                <img src="1.png" alt="init command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-init" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="1.png" alt="init command illustration">
+    </div>
+
+    <section id="useradd">
+        <div class="content">
+            <h2><i class="fas fa-user-plus"></i> useradd</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The useradd command is used to create a new user on the system.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo useradd -m -s /bin/bash john</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-useradd">
+                <img src="2.png" alt="useradd command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-useradd" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="2.png" alt="useradd command illustration">
+    </div>
+
+    <section id="usermod">
+        <div class="content">
+            <h2><i class="fas fa-user-edit"></i> usermod</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The usermod command modifies the properties of an existing user account.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo usermod -aG sudo john</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-usermod">
+                <img src="3.png" alt="usermod command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-usermod" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="3.png" alt="usermod command illustration">
+    </div>
+    
+    <section id="userdel">
+        <div class="content">
+            <h2><i class="fas fa-user-times"></i> userdel</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The userdel command is used to delete a user from the system.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo userdel -r john</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-userdel">
+                <img src="4.png" alt="userdel command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-userdel" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="4.png" alt="userdel command illustration">
+    </div>
+    
+    <section id="groupadd">
+        <div class="content">
+            <h2><i class="fas fa-users"></i> groupadd</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The groupadd command is used to create a new group in the system.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo groupadd admins</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-groupadd">
+                <img src="5.jpg" alt="groupadd command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-groupadd" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="5.jpg" alt="groupadd command illustration">
+    </div>
+    
+    <section id="groupmod">
+        <div class="content">
+            <h2><i class="fas fa-users-cog"></i> groupmod</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The groupmod command modifies an existing group on the system.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo groupmod -n newadmins admins</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-groupmod">
+                <img src="6.png" alt="groupmod command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-groupmod" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="6.png" alt="groupmod command illustration">
+    </div>
+    
+    <section id="groupdel">
+        <div class="content">
+            <h2><i class="fas fa-users-slash"></i> groupdel</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The groupdel command is used to delete a group from the system.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo groupdel admins</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-groupdel">
+                <img src="7.png" alt="groupdel command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-groupdel" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="7.png" alt="groupdel command illustration">
+    </div>
+    
+    <section id="passwd">
+        <div class="content">
+            <h2><i class="fas fa-key"></i> passwd</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The passwd command is used to change the password of a user.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo passwd john</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-passwd">
+                <img src="8.png" alt="passwd command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-passwd" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="8.png" alt="passwd command illustration">
+    </div>
+    
+    <section id="sudo">
+        <div class="content">
+            <h2><i class="fas fa-shield-alt"></i> sudo</h2>
+            <div class="command-description">
+                <p><strong>Description:</strong> The sudo command is used to execute commands with superuser (root) privileges.</p>
+                <p><strong>Example:</strong></p>
+                <pre class="command-example">sudo apt-get update</pre>
+            </div>
+        </div>
+        <div class="image">
+            <a href="#modal-sudo">
+                <img src="9.png" alt="sudo command illustration">
+            </a>
+        </div>
+    </section>
+    <div id="modal-sudo" class="modal">
+        <a href="#" class="close">&times;</a>
+        <img src="9.png" alt="sudo command illustration">
+    </div>
+    
+
+    <footer>
+        <p>Linux Command Guide &copy; 2025</p>
+    </footer>
+</body>
+</html>
